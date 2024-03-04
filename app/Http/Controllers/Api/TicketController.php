@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Ticket;
 use Laravel\Sanctum\PersonalAccessToken;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
 class TicketController extends Controller
 {
     public function store(StoreTicket $request){
@@ -96,6 +100,25 @@ class TicketController extends Controller
         	$ticket->save();
         	
             DB::commit();
+
+            if(!empty($us->fcm)){
+                $fcmToken=$user->fcm;
+                $optionBuilder = new OptionsBuilder();
+                $optionBuilder->setTimeToLive(60*20);
+                $notificationBuilder = new PayloadNotificationBuilder('Bus');
+                $notificationBuilder->setBody('Ticket charged successfully')->setSound('default');
+                $dataBuilder = new PayloadDataBuilder();
+                
+                $dataBuilder->addData(['data'=>$ticket]);
+                $option = $optionBuilder->build();
+                $notification = $notificationBuilder->build();
+                $data = $dataBuilder->build();
+                $downstreamResponse = FCM::sendTo($fcmToken, $option, $notification, $data);
+                if($downstreamResponse->numberSuccess()==1){
+                }
+                if($downstreamResponse->numberFailure()==1){
+                }
+            }
             return response()->json(['message' => 'Tickets charged successfully']);
 
         } catch (\Exception $e) {

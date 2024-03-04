@@ -184,4 +184,20 @@ class AuthController extends Controller
             ], 422);
         }
     }
+    public function storeFcm(Request $request){
+        try {
+            $user=$request->user();
+            $user->fcm=$request->json('fcm');
+            $user->save();
+            return response()->json(['message' => 'Stored Successfully']);
+
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Store fcm Failed: ' . $e->getMessage());
+            // Return a JSON response with an error message
+            return response()->json([
+                'message' => 'Unable to store fcm '.$e->getMessage(),
+            ], 422);
+        }
+    }
 }

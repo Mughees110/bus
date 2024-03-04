@@ -25,6 +25,7 @@ Route::post('/change-password', [AuthController::class, 'changePassword'])->midd
 
 // Authenticated routes (require authentication via Sanctum)
 Route::middleware('auth:sanctum')->group(function () {
+	Route::get('/store-fcm', [AuthController::class, 'storeFcm'])->middleware('throttle:120,1');
     Route::get('/user', [AuthController::class, 'user'])->middleware('throttle:120,1');
     Route::post('/store-ticket', [TicketController::class, 'store'])->middleware('throttle:120,1');
     Route::post('/charge', [TicketController::class, 'charge'])->middleware('throttle:120,1');
