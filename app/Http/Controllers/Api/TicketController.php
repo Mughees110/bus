@@ -131,4 +131,22 @@ class TicketController extends Controller
             ], 422);
         }
     }
+
+    public function history(Request $request){
+        try {
+            $tickets=Ticket::all();
+            foreach ($tickets as $key => $value) {
+                $value->setAttribute('user',User::find($value->userId));
+            }
+            return response()->json(['data' => $tickets]);
+
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Get users Failed: ' . $e->getMessage());
+            // Return a JSON response with an error message
+            return response()->json([
+                'message' => 'Unable to get all users '.$e->getMessage(),
+            ], 422);
+        }
+    }
 }
