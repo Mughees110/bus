@@ -94,6 +94,15 @@ class AuthController extends Controller
         $tickets=Ticket::where('userId',$request->user()->id)->orderBy('created_at','desc')->get();
         return response()->json(['user' => $request->user(),'history'=>$tickets]);
     }
+    public function userById(Request $request)
+    {
+        $user=User::find($request->json('userId'));
+        $tickets=null;
+        if($user){
+            $tickets=Ticket::where('userId',$user->id)->orderBy('created_at','desc')->get();
+        }
+        return response()->json(['user' => $user,'history'=>$tickets]);
+    }
 
     /**
      * Logout the user.
