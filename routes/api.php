@@ -27,7 +27,7 @@ Route::post('/change-password', [AuthController::class, 'changePassword'])->midd
 Route::middleware('auth:sanctum')->group(function () {
 	Route::post('/store-fcm', [AuthController::class, 'storeFcm'])->middleware('throttle:120,1');
     Route::get('/user', [AuthController::class, 'user'])->middleware('throttle:120,1');
-    Route::get('/user-by-id', [AuthController::class, 'userById'])->middleware('throttle:120,1');
+    Route::post('/user-by-id', [AuthController::class, 'userById'])->middleware('throttle:120,1');
     Route::post('/store-ticket', [TicketController::class, 'store'])->middleware('throttle:120,1');
     Route::get('/get-history', [TicketController::class, 'history'])->middleware('throttle:120,1');
     Route::post('/charge', [TicketController::class, 'charge'])->middleware('throttle:120,1');
