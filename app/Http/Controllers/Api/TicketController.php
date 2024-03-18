@@ -18,7 +18,7 @@ use FCM;
 class TicketController extends Controller
 {
     public function store(StoreTicket $request){
-    	//try {
+    	try {
     		DB::beginTransaction();
 
             $validatedData = $request->validated();
@@ -54,7 +54,7 @@ class TicketController extends Controller
             return response()->json(['message' => 'Tickets assigned successfully']);
             
 
-       /* } catch (\Exception $e) {
+        } catch (\Exception $e) {
             // Log the error
             Log::error('Storing Ticket failed: ' . $e->getMessage());
             DB::rollBack();
@@ -62,10 +62,10 @@ class TicketController extends Controller
             return response()->json([
                 'message' => 'Storing ticket failed'.$e->getMessage(),
             ], 422);
-        }*/
+        }
     }
     public function charge(Charge $request){
-    	try {
+    	//try {
     		DB::beginTransaction();
 
             $validatedData = $request->validated();
@@ -121,7 +121,7 @@ class TicketController extends Controller
             }
             return response()->json(['message' => 'Tickets charged successfully']);
 
-        } catch (\Exception $e) {
+        /*} catch (\Exception $e) {
             // Log the error
             Log::error('Charging Ticket failed: ' . $e->getMessage());
             DB::rollBack();
@@ -129,7 +129,7 @@ class TicketController extends Controller
             return response()->json([
                 'message' => 'Charging ticket failed'.$e->getMessage(),
             ], 422);
-        }
+        }*/
     }
 
     public function history(Request $request){
