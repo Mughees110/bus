@@ -114,6 +114,7 @@ class TicketController extends Controller
                 $notification = $notificationBuilder->build();
                 $data = $dataBuilder->build();
                 $downstreamResponse = FCM::sendTo($fcmToken, $option, $notification, $data);
+                dd($downstreamResponse);
                 if($downstreamResponse->numberSuccess()==1){
                 }
                 if($downstreamResponse->numberFailure()==1){
