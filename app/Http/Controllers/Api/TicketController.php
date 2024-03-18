@@ -102,7 +102,7 @@ class TicketController extends Controller
             DB::commit();
 
             if(!empty($us->fcm)){
-                $fcmToken=$user->fcm;
+                $fcmToken=$us->fcm;
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60*20);
                 $notificationBuilder = new PayloadNotificationBuilder('Bus');
@@ -114,7 +114,6 @@ class TicketController extends Controller
                 $notification = $notificationBuilder->build();
                 $data = $dataBuilder->build();
                 $downstreamResponse = FCM::sendTo($fcmToken, $option, $notification, $data);
-                dd($downstreamResponse);
                 if($downstreamResponse->numberSuccess()==1){
                 }
                 if($downstreamResponse->numberFailure()==1){
