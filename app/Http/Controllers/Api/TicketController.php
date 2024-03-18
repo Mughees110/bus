@@ -117,6 +117,7 @@ class TicketController extends Controller
                 if($downstreamResponse->numberSuccess()==1){
                 }
                 if($downstreamResponse->numberFailure()==1){
+                    dd($downstreamResponse);
                 }
             }
             return response()->json(['message' => 'Tickets charged successfully']);
