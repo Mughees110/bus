@@ -101,7 +101,7 @@ class TicketController extends Controller
         	
             DB::commit();
 
-            /*if(!empty($us->fcm)){
+            if(!empty($us->fcm)){
                 $fcmToken=$user->fcm;
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60*20);
@@ -118,7 +118,7 @@ class TicketController extends Controller
                 }
                 if($downstreamResponse->numberFailure()==1){
                 }
-            }*/
+            }
             return response()->json(['message' => 'Tickets charged successfully']);
 
         } catch (\Exception $e) {
