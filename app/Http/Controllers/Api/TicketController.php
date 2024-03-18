@@ -65,7 +65,7 @@ class TicketController extends Controller
         }
     }
     public function charge(Charge $request){
-    	//try {
+    	try {
     		DB::beginTransaction();
 
             $validatedData = $request->validated();
@@ -117,12 +117,11 @@ class TicketController extends Controller
                 if($downstreamResponse->numberSuccess()==1){
                 }
                 if($downstreamResponse->numberFailure()==1){
-                    dd($downstreamResponse);
                 }
             }
             return response()->json(['message' => 'Tickets charged successfully']);
 
-       /* } catch (\Exception $e) {
+        } catch (\Exception $e) {
             // Log the error
             Log::error('Charging Ticket failed: ' . $e->getMessage());
             DB::rollBack();
@@ -130,7 +129,7 @@ class TicketController extends Controller
             return response()->json([
                 'message' => 'Charging ticket failed'.$e->getMessage(),
             ], 422);
-        }*/
+        }
     }
 
     public function history(Request $request){
