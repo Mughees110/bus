@@ -39,8 +39,7 @@ class TicketController extends Controller
             	$tickets=$validatedData['tickets'];
             }
             if(!empty($us->tickets)){
-            	$tickets=(int)$us->ticket+$validatedData['tickets'];
-            	
+            	$tickets=(int)$us->tickets+$validatedData['tickets'];
             }
             $us->tickets=$tickets;
             $us->save();
