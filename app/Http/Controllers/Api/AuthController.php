@@ -209,4 +209,41 @@ class AuthController extends Controller
             ], 422);
         }
     }
+    public function editUser(Request $request){
+        try {
+            $user=$request->user();
+            if(!empty($request->json('name'))){
+                $user->name=$request->json('name');    
+            }
+            $user->save();
+            return response()->json(['message' => 'Updated Successfully']);
+
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Edit user Failed: ' . $e->getMessage());
+            // Return a JSON response with an error message
+            return response()->json([
+                'message' => 'Unable to edit user '.$e->getMessage(),
+            ], 422);
+        }
+    }
+    public function deleteUser(Request $request){
+        try {
+            $user=$request->user();
+            $tickets=Ticket::where('userId',$user->id)->get();
+            foreach ($tickets as $key => $value) {
+                $value->delete();
+            }
+            $user->delete();
+            return response()->json(['message' => 'Deleted Successfully']);
+
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Delete user Failed: ' . $e->getMessage());
+            // Return a JSON response with an error message
+            return response()->json([
+                'message' => 'Unable to delete user '.$e->getMessage(),
+            ], 422);
+        }
+    }
 }
