@@ -229,7 +229,7 @@ class AuthController extends Controller
     }
     public function deleteUser(Request $request){
         try {
-            $user=User::find($request->json('userId');
+            $user=User::find($request->json('userId'));
             $tickets=Ticket::where('userId',$user->id)->get();
             foreach ($tickets as $key => $value) {
                 $value->delete();
