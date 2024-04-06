@@ -25,7 +25,7 @@ class Register extends FormRequest
             'password' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users',
             'name' => 'string|max:255',
-            'role' => 'required|string|max:30|in:user,conductor',
+            'role' => 'required|string|max:30|in:user,conductor,super-admin',
             // Add more rules as needed
         ];
     }
