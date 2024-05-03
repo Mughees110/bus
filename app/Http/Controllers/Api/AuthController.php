@@ -211,7 +211,7 @@ class AuthController extends Controller
     }
     public function editUser(Request $request){
         try {
-            $user=$request->user();
+            $user=User::find($request->json('userId'));
             if(!empty($request->json('name'))){
                 $user->name=$request->json('name');    
             }
