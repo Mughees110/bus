@@ -215,6 +215,9 @@ class AuthController extends Controller
             if(!empty($request->json('name'))){
                 $user->name=$request->json('name');    
             }
+            if(!empty($request->json('note'))){
+                $user->note=$request->json('note');    
+            }
             $user->save();
             return response()->json(['message' => 'Updated Successfully']);
 

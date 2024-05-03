@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('role');
             $table->integer('tickets')->nullable();
             $table->longText('fcm')->nullable();
+            $table->string('note')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
