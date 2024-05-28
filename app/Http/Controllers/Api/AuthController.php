@@ -129,7 +129,7 @@ class AuthController extends Controller
                 ], 422);
             }
             $otp=rand(1111,8888);
-            Mail::send('mail',['otp'=>$opt], function($message) use($email){
+            Mail::send('mail',['otp'=>$otp], function($message) use($email){
                      $message->to($email)->subject('BUS');
                      $message->from('info@appautomovilestorres.es');
                     });
