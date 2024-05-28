@@ -131,7 +131,7 @@ class AuthController extends Controller
             $otp=rand(1111,8888);
             Mail::send('mail',['otp'=>$opt], function($message) use($email){
                      $message->to($email)->subject('BUS');
-                     $message->from('bloodfor@blood-for-life.com');
+                     $message->from('info@appautomovilestorres.es');
                     });
             
             return response()->json(['otp' => $otp]);
