@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Ticket;
 use Laravel\Sanctum\PersonalAccessToken;
-use LaravelFCM\Message\OptionsBuilder;
-use LaravelFCM\Message\PayloadDataBuilder;
-use LaravelFCM\Message\PayloadNotificationBuilder;
-use FCM;
+
 use FCM;
 use App\Services\FirebaseService;
 class TicketController extends Controller
