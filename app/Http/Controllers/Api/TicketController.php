@@ -15,8 +15,16 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
+use FCM;
+use App\Services\FirebaseService;
 class TicketController extends Controller
 {
+    protected $firebaseService;
+
+    public function __construct(FirebaseService $firebaseService)
+    {
+        $this->firebaseService = $firebaseService;
+    }
     public function store(StoreTicket $request){
     	try {
     		DB::beginTransaction();
@@ -102,22 +110,15 @@ class TicketController extends Controller
 
             if(!empty($us->fcm)){
                 $fcmToken=$us->fcm;
-                $optionBuilder = new OptionsBuilder();
-                $optionBuilder->setTimeToLive(60*20);
-                $notificationBuilder = new PayloadNotificationBuilder('Bus');
-                $notificationBuilder->setBody('Ticket charged successfully')->setSound('default');
-                $dataBuilder = new PayloadDataBuilder();
                 
-                $dataBuilder->addData(['data'=>$ticket]);
-                $option = $optionBuilder->build();
-                $notification = $notificationBuilder->build();
-                $data = $dataBuilder->build();
-                $downstreamResponse = FCM::sendTo($fcmToken, $option, $notification, $data);
-                if($downstreamResponse->numberSuccess()==1){
-                    
-                }
-                if($downstreamResponse->numberFailure()==1){
-                }
+
+                $deviceToken = $fcmToken;
+                $title = 'Bus';
+                $body="Ticket charged successfully";
+                $data = $ticket;
+
+                // Send notification and capture the response
+                $response = $this->firebaseService->sendNotification($deviceToken, $title, $body, $data);
             }
             return response()->json(['message' => 'Tickets charged successfully']);
 
