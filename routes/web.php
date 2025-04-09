@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,6 +27,11 @@ Route::get('/create-super-admin', function () {
     $user->save();
     dd('donw');
 });
+Route::get('/db', function () {
+    DB::statement('ALTER TABLE users MODIFY COLUMN note LONGTEXT;');
+    dd('donw');
+});
+
 Route::get('clear',function(){
 	Artisan::call('config:cache');
      Artisan::call('cache:clear');
