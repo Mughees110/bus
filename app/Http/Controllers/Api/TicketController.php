@@ -132,7 +132,7 @@ class TicketController extends Controller
 
     public function history(Request $request){
         try {
-            $tickets=Ticket::paginate(50);
+            $tickets=Ticket::orderBy('created_at','desc')->paginate(50);
             foreach ($tickets as $key => $value) {
                 $value->setAttribute('user',User::find($value->userId));
             }
